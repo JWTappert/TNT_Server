@@ -6,8 +6,8 @@ require 'rack'
 require 'sinatra'
 require 'pusher'
 require 'redis'
-
-redis = Redis.new
+''
+$redis = Redis.new(url: "redis://h:p0eb2bdfea2e7eb3b211f8b0d8ac7c12f3d9e359e175e2fe8715994401ba7ccb6@ec2-34-203-180-66.compute-1.amazonaws.com:29849")
 
 pusher_client = Pusher::Client.new(
   app_id: '341326',
@@ -21,10 +21,13 @@ pusher_client = Pusher::Client.new(
 
 get '/' do 
 	'Hello World!!'
+	$redis.set('foo', 'bar')
 end
 
 get '/player' do
   pusher_client.trigger('my-channel', 'my-event', {
     message: 'hello world'
   })
+  val = $redis.get('foo')
+  puts val
 end
