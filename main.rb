@@ -24,12 +24,11 @@ get '/' do
 end
 
 get '/player' do
-  pusher_client.trigger('my-channel', 'my-event', {
-    message: 'hello world'
-  })
   player = $redis.get('playerId') || 0
 	location = $redis.get('locationId') || 0
-	"Player id: #{player}, location id: #{location}"
+	pusher_client.trigger('my-channel', 'my-event', {
+    message: "Player id: #{player}, location id: #{location}"
+  })
 end
 
 get '/:player_id/move/:location_id' do
