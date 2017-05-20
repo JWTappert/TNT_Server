@@ -29,7 +29,7 @@ get '/player' do
 	pusher_client.trigger('my-channel', 'my-event', {
     message: "Player id: #{player}, location id: #{location}"
   })
-  "Player id: #{player}, location id: #{location}"
+  "Message sent to subscribers"
 end
 
 get '/:player_id/move/:location_id' do
